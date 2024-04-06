@@ -13,6 +13,9 @@
 		6771DB0B2BC2010200717101 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6771DB0A2BC2010200717101 /* Preview Assets.xcassets */; };
 		6771DB132BC202A300717101 /* TasksDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6771DB112BC202A300717101 /* TasksDataModel.xcdatamodeld */; };
 		6771DB152BC2031100717101 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6771DB142BC2031100717101 /* DataController.swift */; };
+		6771DB172BC207FB00717101 /* AddNewTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6771DB162BC207FB00717101 /* AddNewTaskView.swift */; };
+		6771DB192BC2080C00717101 /* EditTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6771DB182BC2080C00717101 /* EditTaskView.swift */; };
+		6771DB1B2BC2082000717101 /* TaskDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6771DB1A2BC2082000717101 /* TaskDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +26,9 @@
 		6771DB0A2BC2010200717101 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6771DB122BC202A300717101 /* TasksDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TasksDataModel.xcdatamodel; sourceTree = "<group>"; };
 		6771DB142BC2031100717101 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		6771DB162BC207FB00717101 /* AddNewTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTaskView.swift; sourceTree = "<group>"; };
+		6771DB182BC2080C00717101 /* EditTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskView.swift; sourceTree = "<group>"; };
+		6771DB1A2BC2082000717101 /* TaskDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +63,9 @@
 			children = (
 				6771DB032BC2010100717101 /* ToDoListApplicationApp.swift */,
 				6771DB052BC2010100717101 /* ContentView.swift */,
+				6771DB162BC207FB00717101 /* AddNewTaskView.swift */,
+				6771DB182BC2080C00717101 /* EditTaskView.swift */,
+				6771DB1A2BC2082000717101 /* TaskDetailsView.swift */,
 				6771DB112BC202A300717101 /* TasksDataModel.xcdatamodeld */,
 				6771DB142BC2031100717101 /* DataController.swift */,
 				6771DB072BC2010200717101 /* Assets.xcassets */,
@@ -144,7 +153,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6771DB062BC2010100717101 /* ContentView.swift in Sources */,
+				6771DB1B2BC2082000717101 /* TaskDetailsView.swift in Sources */,
+				6771DB172BC207FB00717101 /* AddNewTaskView.swift in Sources */,
 				6771DB152BC2031100717101 /* DataController.swift in Sources */,
+				6771DB192BC2080C00717101 /* EditTaskView.swift in Sources */,
 				6771DB132BC202A300717101 /* TasksDataModel.xcdatamodeld in Sources */,
 				6771DB042BC2010100717101 /* ToDoListApplicationApp.swift in Sources */,
 			);
