@@ -38,8 +38,8 @@ struct ContentView: View {
             }
             
             
-            .sheet(item: $selectedItem) { item in
-                TaskDetailsView()
+            .fullScreenCover(item: $selectedItem) { item in
+                TaskDetailsView(item: item)
             }
             
         }}
