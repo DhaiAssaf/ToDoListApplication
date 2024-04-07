@@ -15,13 +15,13 @@ enum TaskPriority: String, CaseIterable, Identifiable {
 
     var id: String { self.rawValue }
     
-    var color: Color {
-        switch self {
-        case .high: return .red
-        case .medium: return .yellow
-        case .low: return .green
-        }
-    }
+//    var color: Color {
+//        switch self {
+//        case .high: return .red
+//        case .medium: return .yellow
+//        case .low: return .green
+//        }
+//    }
 }
 
 
@@ -39,7 +39,7 @@ struct AddNewTaskView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Add Task Details"), footer: Text(showingError ? errorMessage : "Title your task to spotlight your priorities.")
+                Section(header: Text("Add Task Details"), footer: Text(showingError ? "Title must be filled in" : "Title your task to spotlight your priorities.")
                     .foregroundStyle(showingError ? .red : .gray)) {
                     TextField("Title", text: $taskTitle)
                     TextField("Details", text: $taskDetails)
@@ -73,7 +73,7 @@ struct AddNewTaskView: View {
                             addNewTask()
                             dismiss()
                         } else {
-                            checkForError()
+                            showingError = true
                         }
                     } .frame(maxWidth: .infinity)
                                   
@@ -86,14 +86,7 @@ struct AddNewTaskView: View {
         }
     }
     
-    private func checkForError() {
-        if taskTitle.isEmpty {
-            showingError = true
-            errorMessage = "Title must be filled in!"
-        } else {
-            showingError = false
-        }
-    }
+
     
     private func addNewTask() {
         let newItem = Task(context: viewContext)
