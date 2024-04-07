@@ -13,7 +13,7 @@ class DataController {
     let container: NSPersistentContainer
 
     init() {
-        container = NSPersistentContainer(name: "Todolist") // Use your `.xcdatamodeld` file name
+        container = NSPersistentContainer(name: "TasksDataModel") // Use your `.xcdatamodeld` file name
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")

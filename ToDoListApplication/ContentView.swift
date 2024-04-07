@@ -33,7 +33,7 @@ struct ContentView: View {
                  
                 }
                 .sheet(isPresented: $isShowingAddNewTaskView) {
-                    AddNewTaskView()
+                    AddNewTaskView(isShowingAddNewTaskView: $isShowingAddNewTaskView)
                 }
             }
             
