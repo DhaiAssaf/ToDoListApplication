@@ -8,17 +8,24 @@
 import SwiftUI
 import CoreData
 
+
 struct ContentView: View {
+    @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.dismiss) var dismiss
     @State private var isShowingAddNewTaskView = false
     @State private var isShowSplashScreen = true
-    @State private var selectedItem: Task? = nil // State to track selected item for editing
-    @Environment(\.managedObjectContext) private var viewContext
+    @State private var selectedItem: Task? = nil
+    @State private var sortSelection: SortingType = .defaultSorting
+    private var filteredItems: [Task] {
+        return SortingTasks.SortItems(Array(todoItems), with: sortSelection)
+    }
+    
     @FetchRequest(
         entity: Task.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Task.title, ascending: true)],
         animation: .easeInOut(duration: 0.3)
     ) private var todoItems: FetchedResults<Task>
-
+    
     var body: some View {
         ZStack {
             NavigationView {
@@ -30,7 +37,10 @@ struct ContentView: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         addButton
                     }
-                 
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        SortMenu
+                    }
+                    
                 }
                 .sheet(isPresented: $isShowingAddNewTaskView) {
                     AddNewTaskView(isShowingAddNewTaskView: $isShowingAddNewTaskView)
@@ -45,7 +55,7 @@ struct ContentView: View {
         }}
     private var listBody: some View {
         List {
-            ForEach(todoItems, id: \.self) { item in
+            ForEach(filteredItems, id: \.self) { item in
                 Button(action: {
                     self.selectedItem = item // Set the selectedItem to trigger the sheet
                 }) {
@@ -56,32 +66,47 @@ struct ContentView: View {
             .onDelete(perform: deleteItems)
         }
     }
-
+    
     private func listItemContent(for item: Task) -> some View {
         HStack {
             Circle()
                 .frame(width: 10, height: 10)
                 .foregroundColor(item.priority == "High" ? .red : (item.priority == "Medium" ? .yellow : .green))
-
+            
+            
             
             VStack(alignment: .leading) {
-                Text(item.title ?? "Untitled").font(.headline)
-                HStack {
+                Text(item.title ?? "Untitled")
+                    .font(.headline)
+                    .strikethrough(item.isDone, color: .red) 
+                HStack(alignment: .top) {
                     Text(item.dueDate?.formatted(date: .abbreviated, time: .shortened) ?? "No date").font(.caption)
                     
-                    if let dueDate = item.dueDate, dueDate < Date() {
-                     
-                        Text("Overdue")
-                            .font(.caption)
-                            .foregroundColor(.red)
-                    }}
+                }
+                
+               
             }
             Spacer()
+            
+            if let dueDate = item.dueDate, dueDate < Date() {
+                Text("Overdue")
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .padding(EdgeInsets(top: 4, leading: 10, bottom: 4, trailing: 10))
+                    .background(Color(white: 0.3))
+                    .clipShape(Capsule())
+                    .overlay(
+                        Capsule().stroke(Color.gray, lineWidth: 1.5)
+                    )
+            }
+
+
+           
             statusButton(for: item)
         }
     }
-
-
+    
+    
     private func statusButton(for item: Task) -> some View {
         Button(action: {
             item.isDone.toggle()
@@ -92,31 +117,30 @@ struct ContentView: View {
         }
         .buttonStyle(BorderlessButtonStyle())
     }
-
+    
     private var addButton: some View {
         Button(action: {
             isShowingAddNewTaskView = true
         }) {
             Image(systemName: "plus")
-                .foregroundStyle(.yellow)
                 .bold()
         }
     }
     
- 
-
     
-
-
-
-
+    
+    
+    
+    
+    
+    
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             offsets.map { todoItems[$0] }.forEach(viewContext.delete)
             saveContext()
         }
     }
-
+    
     private func saveContext() {
         do {
             try viewContext.save()
@@ -124,12 +148,31 @@ struct ContentView: View {
             print("Error saving context: \(error)")
         }
     }
+    
+    
+    
+    
+    
+    private var SortMenu: some View {
+       Menu {
+            Picker("Sort", selection: $sortSelection) {
+                ForEach(SortingType.allCases.filter { $0 != .defaultSorting }, id: \.self) { sort in
+                    HStack{
+                        Image(systemName: sort.systemImageName)
+                            .foregroundColor(.gray)
+                        Text(sort.rawValue).tag(sort)
+                    }
+                }
+            }
+        } label: {
+            Label("Sort Options", systemImage: "line.horizontal.3")
+                .imageScale(.large)
+                .bold()
+        }
+    }
+    }
 
-
-
-}
-
-
+    
 
     
     #Preview {

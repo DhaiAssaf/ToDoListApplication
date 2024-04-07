@@ -15,24 +15,17 @@ enum TaskPriority: String, CaseIterable, Identifiable {
 
     var id: String { self.rawValue }
     
-//    var color: Color {
-//        switch self {
-//        case .high: return .red
-//        case .medium: return .yellow
-//        case .low: return .green
-//        }
-//    }
 }
 
 
 struct AddNewTaskView: View {
+    @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.dismiss) var dismiss
     @Binding var isShowingAddNewTaskView: Bool
     @State private var taskTitle: String = ""
     @State private var taskDetails: String = ""
     @State private var dueDate: Date = Date()
     @State private var taskPriority: TaskPriority = .medium
-    @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.dismiss) var dismiss
     @State private var showingError = false
     @State private var errorMessage: String = ""
 
@@ -95,6 +88,7 @@ struct AddNewTaskView: View {
         newItem.dueDate = dueDate
         newItem.priority = taskPriority.rawValue
         newItem.isDone = false
+        newItem.createdDate = Date()
         newItem.id = UUID()
         
         do {

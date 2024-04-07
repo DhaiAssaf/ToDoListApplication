@@ -9,6 +9,8 @@ import SwiftUI
 import CoreData
 
 struct EditTaskView: View {
+    @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.dismiss) var dismiss
     // Task item to edit
      var todoItems: FetchedResults<Task>.Element
  //Attributes to edit
@@ -18,10 +20,6 @@ struct EditTaskView: View {
      @State private var dueDate: Date = Date()
      @State private var taskPriority: String = ""
      @State private var refreshToggle = false
- //Manged object and dismiss
-     @Environment(\.managedObjectContext) private var viewContext
-     @Environment(\.dismiss) var dismiss
-     
      var body: some View {
          NavigationStack {
              Form {

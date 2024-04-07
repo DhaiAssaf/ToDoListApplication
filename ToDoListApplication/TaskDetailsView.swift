@@ -16,16 +16,14 @@ struct TaskDetailsView: View {
         NavigationView {
             VStack {
                
-                // Ensures the text starts at the top
+              
                 Text(item.details ?? "No details")
                     .font(.title2)
                     .multilineTextAlignment(.leading)
                     .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading) // Aligns text to the leading edge
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
-                Spacer() // Pushes content to the top and bottom
-                
-                // Edit button positioned at the bottom
+                Spacer()
                 Button(action: {
                     showingEditTaskView = true
                 }) {
@@ -48,7 +46,7 @@ struct TaskDetailsView: View {
             }
 
 
-            .frame(maxWidth: .infinity, maxHeight: .infinity) // Makes VStack fill the screen
+            .frame(maxWidth: .infinity, maxHeight: .infinity) 
             .navigationBarTitle(item.title ?? "Title", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
