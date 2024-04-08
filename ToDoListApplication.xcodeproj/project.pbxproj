@@ -20,7 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6771DB002BC2010100717101 /* ToDoListApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoListApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6771DB002BC2010100717101 /* To Do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "To Do.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6771DB032BC2010100717101 /* ToDoListApplicationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListApplicationApp.swift; sourceTree = "<group>"; };
 		6771DB052BC2010100717101 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6771DB072BC2010200717101 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -55,7 +55,7 @@
 		6771DB012BC2010100717101 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6771DB002BC2010100717101 /* ToDoListApplication.app */,
+				6771DB002BC2010100717101 /* To Do.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,7 +102,7 @@
 			);
 			name = ToDoListApplication;
 			productName = ToDoListApplication;
-			productReference = 6771DB002BC2010100717101 /* ToDoListApplication.app */;
+			productReference = 6771DB002BC2010100717101 /* To Do.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -309,7 +309,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = TrackIOS.ToDoListApplication;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "To Do";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -337,7 +337,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = TrackIOS.ToDoListApplication;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "To Do";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

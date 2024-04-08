@@ -11,11 +11,13 @@ import CoreData
 @main
 struct ToDoListApplicationApp: App {
     let dataController = DataController.shared
-        var body: some Scene {
-            WindowGroup {
-                ContentView()
-                    .environment(\.managedObjectContext, dataController.container.viewContext)
-                    
-            }
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .environment(\.managedObjectContext, dataController.container.viewContext)
+                .background(Color.gray)
+                .edgesIgnoringSafeArea(.all)
+            
         }
+    }
 }
