@@ -75,12 +75,7 @@ struct EditTaskView: View {
         todoItems.dueDate = dueDate
         todoItems.priority = taskPriority
         
-        do {
-            try viewContext.save()
-        } catch {
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
+        try? viewContext.save()
     }
 }
 
