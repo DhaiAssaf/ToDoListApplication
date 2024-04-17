@@ -14,7 +14,7 @@ struct ContentView: View {
     //priority details
     @State private var showingPriorityMessage: Bool = false
     @State private var showingPriorityMessageForTaskID: NSManagedObjectID?
-    
+    @State private var showingDeleteAllConfirmation = false
     
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.dismiss) var dismiss //to go back to the previous view
@@ -33,52 +33,77 @@ struct ContentView: View {
         animation: .easeInOut(duration: 0.3)
     ) private var todoItems: FetchedResults<Task>
     
+    //Body
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            NavigationView {
-                VStack {
+        NavigationView {
+            VStack {
+                if todoItems.isEmpty {
+                    Spacer()
+                    Text("There are no tasks")
+                        .foregroundColor(.gray)
+                        .italic()
+                    Spacer()
+                } else {
                     listBody
                 }
-                .navigationBarTitle("To-Do List")
-                .toolbar {
+            }
+            .navigationBarTitle("To-Do List")
+            .toolbar {
+                if !todoItems.isEmpty {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         SortMenu
                     }
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            showingDeleteAllConfirmation = true
+                        }) {
+                            Image(systemName: "trash")
+                                .foregroundStyle(.red)
+                        }
+                    }
+                }}
+            .confirmationDialog("Are you sure you want to delete all tasks?", isPresented: $showingDeleteAllConfirmation, titleVisibility: .visible) {
+                Button("Delete All", role: .destructive) {
+                    deleteAllTasks()
                 }
-                //add new task sheet
-                .sheet(isPresented: $isShowingAddNewTaskView) {
-                    AddNewTaskView(isShowingAddNewTaskView: $isShowingAddNewTaskView)
-                }
-                //task dsecription view
-                .fullScreenCover(item: $selectedItem) { item in
-                    TaskDetailsView(item: item)
-                }
+                Button("Cancel", role: .cancel) {}
             }
-            
-            addButton
-                .padding(.trailing, 30) // Right padding
-                .padding(.bottom, 30)
+            .sheet(isPresented: $isShowingAddNewTaskView) {
+                AddNewTaskView(isShowingAddNewTaskView: $isShowingAddNewTaskView)
+            }
+            .fullScreenCover(item: $selectedItem) { item in
+                TaskDetailsView(item: item)
+            }
         }
+        .overlay(
+            addButton
+                .padding(.trailing, 30)
+                .padding(.bottom, 30),
+            alignment: .bottomTrailing
+        )
     }
     
     //List view
     private var listBody: some View {
-        List {
-            ForEach(sortedItems, id: \.self) { item in
-                Button(action: {
-                    self.selectedItem = item // Set the selectedItem to trigger the sheet
-                }) {
-                    listItemContent(for: item)
+ 
+                // Otherwise, display the list of tasks
+                List {
+                    ForEach(sortedItems, id: \.self) { item in
+                        Button(action: {
+                            self.selectedItem = item // Set the selectedItem to trigger the sheet
+                        }) {
+                            listItemContent(for: item)
+                        }
+                        .buttonStyle(PlainButtonStyle()) // So it looks like a list item, not a button
+                    }
+                    .onDelete(perform: deleteItems)
                 }
-                .buttonStyle(PlainButtonStyle()) // So it looks like a list item, not a button
             }
-            .onDelete(perform: deleteItems)
-        }
-    }
+        
     
+
     
     private func listItemContent(for item: Task) -> some View {
-        
         
         return ZStack(alignment: .leading) {
             HStack {
@@ -148,7 +173,7 @@ struct ContentView: View {
     private func statusButton(for item: Task) -> some View {
         Button(action: {
             item.isDone.toggle()
-            saveContext()
+            try? viewContext.save()
         }) {
             Image(systemName: item.isDone ? "checkmark.circle.fill" : "circle")
                 .foregroundColor(item.isDone ? .green : .gray)
@@ -167,22 +192,6 @@ struct ContentView: View {
                 .foregroundStyle(.gray)
             
             
-        }
-    }
-    
-    //delete task function
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { todoItems[$0] }.forEach(viewContext.delete)
-            saveContext()
-        }
-    }
-    //save changes function
-    private func saveContext() {
-        do {
-            try viewContext.save()
-        } catch {
-            print("Error saving context: \(error)")
         }
     }
     
@@ -207,7 +216,28 @@ struct ContentView: View {
             
         }
     }
+
+
     
+    //delete task function
+    private func deleteItems(offsets: IndexSet) {
+        withAnimation {
+            offsets.map { todoItems[$0] }.forEach(viewContext.delete)
+            try? viewContext.save()
+        }
+    }
+
+    private func deleteAllTasks() {
+        withAnimation {
+            for task in todoItems {
+                viewContext.delete(task)
+            }
+            
+            try? viewContext.save()
+        }
+        
+        
+    }
     
 }
 

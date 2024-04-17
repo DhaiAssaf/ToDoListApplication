@@ -97,12 +97,7 @@ struct AddNewTaskView: View {
         newItem.createdDate = Date()
         newItem.id = UUID()
         
-        do {
-            try viewContext.save() //save changes
-        } catch {
-            errorMessage = error.localizedDescription
-            showingError = true
-        }
+        try? viewContext.save()
     }
 }
 
