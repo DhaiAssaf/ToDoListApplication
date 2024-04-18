@@ -5,7 +5,6 @@
 //  Created by Dhai Alassaf on 28/09/1445 AH.
 //
 
-
 import SwiftUI
 
 //Task priority
@@ -18,19 +17,19 @@ enum TaskPriority: String, CaseIterable, Identifiable {
     
 }
 
-
 struct AddNewTaskView: View {
     
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.dismiss) var dismiss
     @Binding var isShowingAddNewTaskView: Bool
+    
     //task details
     @State private var taskTitle: String = ""
     @State private var taskDetails: String = ""
     @State private var dueDate: Date = Date()
     @State private var taskPriority: TaskPriority = .medium
     @State private var showingError = false
-    @State private var errorMessage: String = ""
+    
     
     var body: some View {
         NavigationStack {
@@ -41,19 +40,14 @@ struct AddNewTaskView: View {
                         TextField("Details", text: $taskDetails)
                         
                         HStack {
-                            
                             Picker("Priority", selection: $taskPriority) {
                                 ForEach(TaskPriority.allCases) { priority in
                                     
                                     Text(priority.rawValue)
                                         .tag(priority)
-                                    
-                                    
                                 }
-                                
                             }
                             .pickerStyle(MenuPickerStyle())
-                            
                         }
                     }
                 
@@ -61,9 +55,6 @@ struct AddNewTaskView: View {
                     
                     DatePicker("Date", selection: $dueDate, in: Date()...)
                 }
-                
-                
-                
                 Section() {
                     Button("Add Task") {
                         if !taskTitle.isEmpty {
@@ -73,18 +64,13 @@ struct AddNewTaskView: View {
                             showingError = true
                         }
                     } .frame(maxWidth: .infinity)
-                    
                 }
-                
             }
-            
             .navigationTitle("Add Task")
             .navigationBarTitleDisplayMode(.large)
         }
     }
-    
-    
-    
+
     private func addNewTask() {
         //create new task
         let newItem = Task(context: viewContext)
@@ -101,8 +87,8 @@ struct AddNewTaskView: View {
     }
 }
 
-
 #Preview {
     AddNewTaskView(isShowingAddNewTaskView: .constant(false))
         .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+    
 }

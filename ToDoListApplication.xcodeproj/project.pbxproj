@@ -44,6 +44,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		675EF3DD2BD184FF0054E8C1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6771DB052BC2010100717101 /* ContentView.swift */,
+				6771DB162BC207FB00717101 /* AddNewTaskView.swift */,
+				6771DB182BC2080C00717101 /* EditTaskView.swift */,
+				6771DB1A2BC2082000717101 /* TaskDetailsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		675EF3DE2BD185340054E8C1 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				6771DB112BC202A300717101 /* TasksDataModel.xcdatamodeld */,
+				6771DB142BC2031100717101 /* DataController.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		6771DAF72BC2010100717101 = {
 			isa = PBXGroup;
 			children = (
@@ -64,13 +84,9 @@
 			isa = PBXGroup;
 			children = (
 				6771DB032BC2010100717101 /* ToDoListApplicationApp.swift */,
-				6771DB052BC2010100717101 /* ContentView.swift */,
-				6771DB162BC207FB00717101 /* AddNewTaskView.swift */,
 				6771DB1C2BC23CAC00717101 /* SortingTasks.swift */,
-				6771DB182BC2080C00717101 /* EditTaskView.swift */,
-				6771DB1A2BC2082000717101 /* TaskDetailsView.swift */,
-				6771DB112BC202A300717101 /* TasksDataModel.xcdatamodeld */,
-				6771DB142BC2031100717101 /* DataController.swift */,
+				675EF3DD2BD184FF0054E8C1 /* Views */,
+				675EF3DE2BD185340054E8C1 /* CoreData */,
 				6771DB072BC2010200717101 /* Assets.xcassets */,
 				6771DB092BC2010200717101 /* Preview Content */,
 			);
