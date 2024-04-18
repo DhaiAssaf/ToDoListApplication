@@ -9,17 +9,20 @@ import SwiftUI
 import CoreData
 
 struct EditTaskView: View {
+    
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.dismiss) var dismiss
+    
     // Task item to edit
     var todoItems: FetchedResults<Task>.Element
+    
     //Attributes to edit
     @State private var showingError = false
     @State private var taskTitle: String = ""
     @State private var taskDetails: String = ""
     @State private var dueDate: Date = Date()
     @State private var taskPriority: String = ""
-    @State private var refreshToggle = false
+    
     var body: some View {
         
         NavigationStack {
@@ -50,9 +53,6 @@ struct EditTaskView: View {
                     } .frame(maxWidth: .infinity)
                     
                 }
-                
-                
-                
             }
             .navigationTitle("Edit Task")
             .navigationBarTitleDisplayMode(.inline)
@@ -78,6 +78,3 @@ struct EditTaskView: View {
         try? viewContext.save()
     }
 }
-
-
-

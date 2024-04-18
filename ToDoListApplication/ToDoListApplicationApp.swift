@@ -10,6 +10,7 @@ import CoreData
 
 @main
 struct ToDoListApplicationApp: App {
+    
     let dataController = DataController.shared
     var body: some Scene {
         WindowGroup {

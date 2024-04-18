@@ -8,24 +8,23 @@
 import SwiftUI
 import CoreData
 
+let dataController = DataController.shared
 
 struct ContentView: View {
     
-    //priority details
-    @State private var showingPriorityMessage: Bool = false
     @State private var showingPriorityMessageForTaskID: NSManagedObjectID?
     @State private var showingDeleteAllConfirmation = false
-    
-    @Environment(\.managedObjectContext) var viewContext
-    @Environment(\.dismiss) var dismiss //to go back to the previous view
-    
     @State private var isShowingAddNewTaskView = false
     @State private var selectedItem: Task? = nil
     @State private var sortSelection: SortingType = .defaultSorting
+    
     //Tasks list copy
     private var sortedItems: [Task] {
         return SortingTasks.SortItems(Array(todoItems), with: sortSelection)
     }
+    
+    @Environment(\.managedObjectContext) var viewContext
+    
     //Fetch request to get Tasks
     @FetchRequest(
         entity: Task.entity(),
@@ -47,7 +46,7 @@ struct ContentView: View {
                     listBody
                 }
             }
-            .navigationBarTitle("To-Do List")
+            .navigationBarTitle("To Do")
             .toolbar {
                 if !todoItems.isEmpty {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -85,23 +84,23 @@ struct ContentView: View {
     
     //List view
     private var listBody: some View {
- 
-                // Otherwise, display the list of tasks
-                List {
-                    ForEach(sortedItems, id: \.self) { item in
-                        Button(action: {
-                            self.selectedItem = item // Set the selectedItem to trigger the sheet
-                        }) {
-                            listItemContent(for: item)
-                        }
-                        .buttonStyle(PlainButtonStyle()) // So it looks like a list item, not a button
-                    }
-                    .onDelete(perform: deleteItems)
-                }
-            }
         
+        // Otherwise, display the list of tasks
+        List {
+            ForEach(sortedItems, id: \.self) { item in
+                Button(action: {
+                    self.selectedItem = item // Set the selectedItem to trigger the sheet
+                }) {
+                    listItemContent(for: item)
+                }
+                .buttonStyle(PlainButtonStyle()) // So it looks like a list item, not a button
+            }
+            .onDelete(perform: deleteItems)
+        }
+    }
     
-
+    
+    
     
     private func listItemContent(for item: Task) -> some View {
         
@@ -189,7 +188,7 @@ struct ContentView: View {
             Image(systemName: "plus.circle.fill")
                 .resizable()
                 .frame(width: 45, height: 45)
-                .foregroundStyle(.gray)
+            
             
             
         }
@@ -216,8 +215,8 @@ struct ContentView: View {
             
         }
     }
-
-
+    
+    
     
     //delete task function
     private func deleteItems(offsets: IndexSet) {
@@ -226,7 +225,7 @@ struct ContentView: View {
             try? viewContext.save()
         }
     }
-
+    
     private func deleteAllTasks() {
         withAnimation {
             for task in todoItems {
@@ -242,7 +241,6 @@ struct ContentView: View {
 }
 
 //Create Extensions on SwiftUI Binding to deselect option on Picker
-
 public extension Binding where Value: Equatable {
     init(_ source: Binding<Value>, deselectTo value: Value) {
         self.init(get: { source.wrappedValue },
@@ -252,6 +250,8 @@ public extension Binding where Value: Equatable {
 }
 
 #Preview {
+    
     ContentView()
         .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+        .environment(\.managedObjectContext, dataController.container.viewContext)
 }
